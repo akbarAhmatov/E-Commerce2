@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.ecommerce2.dto.*;
+import uz.pdp.ecommerce2.service.AuthService;
 import uz.pdp.ecommerce2.service.CategoryService;
 import uz.pdp.ecommerce2.service.OrderService;
 import uz.pdp.ecommerce2.service.ProductService;
@@ -22,6 +23,8 @@ public class AdminController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final OrderService orderService;
+    private final AuthService authService;
+
     
     @PostMapping("/products")
     public ResponseEntity<ProductResponse> createProduct(
@@ -34,6 +37,12 @@ public class AdminController {
             @PathVariable Long id,
             @Valid @RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(id, request));
+    }
+    @PostMapping("/create-admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AuthResponse> createAdmin(
+            @Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.createAdmin(request));
     }
     
     @DeleteMapping("/products/{id}")

@@ -13,6 +13,7 @@ import uz.pdp.ecommerce2.dto.RegisterRequest;
 import uz.pdp.ecommerce2.exception.DuplicateResourceException;
 import uz.pdp.ecommerce2.exception.ResourceNotFoundException;
 import uz.pdp.ecommerce2.mapper.UserMapper;
+import uz.pdp.ecommerce2.model.Role;
 import uz.pdp.ecommerce2.model.User;
 import uz.pdp.ecommerce2.repository.UserRepository;
 
@@ -56,6 +57,23 @@ public class AuthService {
         AuthResponse response = userMapper.userToAuthResponse(user);
         response.setToken(token);
         
+        return response;
+    }
+    @Transactional
+    public AuthResponse createAdmin(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new DuplicateResourceException("Email already exists");
+        }
+
+        User user = userMapper.registerRequestToUser(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(Role.ROLE_ADMIN);  // Устанавливаем роль ADMIN
+        user = userRepository.save(user);
+
+        String token = jwtUtil.generateToken(user);
+        AuthResponse response = userMapper.userToAuthResponse(user);
+        response.setToken(token);
+
         return response;
     }
 }
