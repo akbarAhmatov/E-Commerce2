@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import uz.pdp.ecommerce2.repository.UserRepository;
 
-// USER DETAILS SERVICE
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {

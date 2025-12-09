@@ -13,7 +13,6 @@ import uz.pdp.ecommerce2.service.OrderService;
 
 import java.util.List;
 
-// ORDER CONTROLLER
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor

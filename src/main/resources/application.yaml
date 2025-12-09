@@ -36,3 +36,8 @@ logging:
   level:
     uz.pdp: DEBUG
     org.springframework.security: DEBUG
+
+springdoc:
+  swagger-ui:
+    config-url: swagger-ui
+

@@ -8,7 +8,6 @@ import uz.pdp.ecommerce2.service.CategoryService;
 
 import java.util.List;
 
-// CATEGORY CONTROLLER
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
